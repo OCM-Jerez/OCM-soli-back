@@ -1,19 +1,17 @@
 FROM node:12-alpine
 
-# Create app directory
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
-WORKDIR /usr/node-app
+WORKDIR /home/node/app
 
-ENV NODE_SERVER_PORT=8081
+COPY package*.json ./
 
-COPY . .
-
-# install server deps
-
-WORKDIR ..
+USER node
 
 RUN npm install
 
+COPY --chown=node:node . .
+
 EXPOSE 8081
 
-ENTRYPOINT ["npm", "run", "start:app" ]
+ENTRYPOINT ["npm", "run", "start" ]

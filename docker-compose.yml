@@ -1,0 +1,52 @@
+version: '3.3'
+
+services:
+  data-base-server:
+    container_name: data-base-server
+    image: mysql:8.0.20
+    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp --sql_mode="" --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'OCMSoliServer'
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: 'root'
+      # You can use whatever password you like
+      MYSQL_PASSWORD: 'root'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - 3306:3306
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      # Where our data will be persisted
+    volumes:
+      - my-db:/var/lib/mysql
+  solicitudes:
+    container_name: solicitudes
+    build:
+      context: ./
+    ports:
+      - '8081:8081'
+    environment:
+      - DATABASE_URL=mysql://root:root@data-base-server/OCMSoliServer # TODO Cambiar despues el usuario y contraseña
+      - NODE_ENV=prod
+    depends_on:
+      - data-base-server
+    links:
+      - data-base-server
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - data-base-server
+    environment:
+      PMA_HOST: data-base-server
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8082:80
+# Names our volume
+volumes:
+  my-db:
