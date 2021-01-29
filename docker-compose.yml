@@ -27,7 +27,7 @@ services:
     build:
       context: ./
     ports:
-      - '8081:8081'
+      - '80:8081'
     environment:
       - DATABASE_URL=mysql://root:root@data-base-server/OCMSoliServer # TODO Cambiar despues el usuario y contraseña
       - NODE_ENV=prod
