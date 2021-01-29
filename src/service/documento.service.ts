@@ -21,7 +21,15 @@ export class DocumentoService {
 
   async findById(id: string): Promise<Documento | undefined> {
     const options = { relations: relationshipNames };
-    return await this.documentoRepository.findOne(id, options);
+    const documento = await this.documentoRepository.findOne(id, options);
+    const blob = documento.documento.toString('hex');
+    var result = '';
+    for (var i = 0; i < blob.length; i = i + 2) {
+      var decval = parseInt(blob.substr(i, 2), 16);
+      result = result + String.fromCharCode(decval);
+    }
+    documento.documento = result;
+    return documento;
   }
 
   async findByfields(options: FindOneOptions<Documento>): Promise<Documento | undefined> {
@@ -30,9 +38,7 @@ export class DocumentoService {
 
   async findAndCount(options: FindManyOptions<Documento>): Promise<[Documento[], number]> {
     options.relations = relationshipNames;
-    const documentos = await this.documentoRepository.findAndCount(options);
-
-    return documentos;
+    return await this.documentoRepository.findAndCount(options);
   }
 
   async findAll(options: FindManyOptions<Documento>, user: User): Promise<Documento[]> {
@@ -50,9 +56,23 @@ export class DocumentoService {
     const docuFiltered = [];
     documentos.forEach(docu => {
       if(docu.privado === false) {
+        const blob = docu.documento.toString('hex');
+        var result = '';
+        for (var i = 0; i < blob.length; i = i + 2) {
+          var decval = parseInt(blob.substr(i, 2), 16);
+          result = result + String.fromCharCode(decval);
+        }
+        docu.documento = result;
         docuFiltered.push(docu);
       }
       if(userResp.authorities.filter(auth => auth === 'ROLE_ADMIN').length > 0 && docu.privado === true) {
+        const blob = docu.documento.toString('hex');
+        var result = '';
+        for (var i = 0; i < blob.length; i = i + 2) {
+          var decval = parseInt(blob.substr(i, 2), 16);
+          result = result + String.fromCharCode(decval);
+        }
+        docu.documento = result;
         docuFiltered.push(docu);
       }
     });
