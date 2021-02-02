@@ -1,10 +1,18 @@
 package com.mamjeres.service.impl;
 
+import com.mamjeres.domain.Documento;
 import com.mamjeres.domain.Gestion;
+import com.mamjeres.domain.Solicitud;
+import com.mamjeres.domain.User;
 import com.mamjeres.repository.GestionRepository;
+import com.mamjeres.repository.SolicitudRepository;
+import com.mamjeres.repository.UserRepository;
+import com.mamjeres.security.AuthoritiesConstants;
 import com.mamjeres.service.GestionService;
 import com.mamjeres.service.dto.GestionDTO;
 import com.mamjeres.service.mapper.GestionMapper;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +33,20 @@ public class GestionServiceImpl implements GestionService {
 
     private final GestionMapper gestionMapper;
 
-    public GestionServiceImpl(GestionRepository gestionRepository, GestionMapper gestionMapper) {
+    private final UserRepository userRepository;
+
+    private final SolicitudRepository solicitudRepository;
+
+    public GestionServiceImpl(
+        GestionRepository gestionRepository,
+        GestionMapper gestionMapper,
+        UserRepository userRepository,
+        SolicitudRepository solicitudRepository
+    ) {
         this.gestionRepository = gestionRepository;
         this.gestionMapper = gestionMapper;
+        this.userRepository = userRepository;
+        this.solicitudRepository = solicitudRepository;
     }
 
     @Override
@@ -43,6 +62,27 @@ public class GestionServiceImpl implements GestionService {
     public Page<GestionDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Gestions");
         return gestionRepository.findAll(pageable).map(gestionMapper::toDto);
+    }
+
+    @Override
+    public List<GestionDTO> findAllByUsuarioAndSolicitud(Long solicitudId, Long usuarioId) {
+        User user = this.userRepository.getOne(usuarioId);
+        Solicitud solicitud = this.solicitudRepository.getOne(solicitudId);
+        List<Gestion> list = this.gestionRepository.findAllBySolicitud(solicitud);
+        List<Gestion> listFiltered = new ArrayList<>();
+        list.forEach(
+            gestion -> {
+                if (!gestion.isPrivado()) {
+                    listFiltered.add(gestion);
+                }
+                if (user.getAuthorities().contains(AuthoritiesConstants.ADMIN) && gestion.isPrivado()) {
+                    //            if(user.getAuthorities().stream().filter(authority -> authority == AuthoritiesConstants.ADMIN).){
+                    listFiltered.add(gestion);
+                }
+            }
+        );
+
+        return this.gestionMapper.toDto(listFiltered);
     }
 
     @Override

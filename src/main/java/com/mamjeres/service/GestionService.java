@@ -1,6 +1,7 @@
 package com.mamjeres.service;
 
 import com.mamjeres.service.dto.GestionDTO;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,14 @@ public interface GestionService {
      * @return the list of entities.
      */
     Page<GestionDTO> findAll(Pageable pageable);
+
+    /**
+     *
+     * @param solicitudId
+     * @param usuarioId
+     * @return
+     */
+    List<GestionDTO> findAllByUsuarioAndSolicitud(Long solicitudId, Long usuarioId);
 
     /**
      * Get the "id" gestion.

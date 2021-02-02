@@ -2,6 +2,7 @@ package com.mamjeres.web.rest;
 
 import com.mamjeres.service.GestionService;
 import com.mamjeres.service.dto.GestionDTO;
+import com.mamjeres.service.dto.SolicitudDTO;
 import com.mamjeres.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
@@ -95,6 +96,22 @@ public class GestionResource {
         Page<GestionDTO> page = gestionService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /gestions/solicitud/:solicitudId/usuario/usuarioId} : get all the solicituds.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of solicituds in body.
+     */
+    @GetMapping("/gestions/solicitud/{solicitudId}/usuario/{usuarioId}")
+    public ResponseEntity<List<GestionDTO>> getAllSolicitudsBySolicitudAndUsuario(
+        @PathVariable Long solicitudId,
+        @PathVariable Long usuarioId
+    ) {
+        log.debug("REST request to get a page of Solicituds");
+        List<GestionDTO> page = gestionService.findAllByUsuarioAndSolicitud(solicitudId, usuarioId);
+        return ResponseEntity.ok().body(page);
     }
 
     /**

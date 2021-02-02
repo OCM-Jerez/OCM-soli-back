@@ -5,6 +5,7 @@ import com.mamjeres.repository.SolicitudRepository;
 import com.mamjeres.service.SolicitudService;
 import com.mamjeres.service.dto.SolicitudDTO;
 import com.mamjeres.service.mapper.SolicitudMapper;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
