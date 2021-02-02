@@ -1,10 +1,8 @@
 ######################
 # Project Specific
 ######################
-/src/main/webapp/content/css/main.css
 /target/classes/static/**
 /src/test/javascript/coverage/
-*.docx
 
 ######################
 # Node
@@ -15,11 +13,6 @@ node_modules/
 npm-debug.log.*
 /.awcache/*
 /.cache-loader/*
-
-######################
-# Node Server NestJS
-######################
-server/dist
 
 ######################
 # SASS
@@ -59,8 +52,9 @@ local.properties
 
 # STS-specific
 /.sts4-cache/*
+
 ######################
-# Intellij
+# IntelliJ
 ######################
 .idea/
 *.iml
@@ -88,6 +82,13 @@ out/
 .gradle/
 /build/
 
+######################
+# Package Files
+######################
+*.jar
+*.war
+*.ear
+*.db
 
 ######################
 # Windows
@@ -144,4 +145,3 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
-/dist/

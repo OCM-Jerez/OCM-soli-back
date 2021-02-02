@@ -1,146 +1,126 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# solicitudes
 
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
+This application was generated using JHipster 6.10.5, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v6.10.5](https://www.jhipster.tech/documentation-archive/v6.10.5).
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-    <p align="center">
-        <a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-        <a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-        <a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-        <a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-        <a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-        <a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-        <a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-        <a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-        <a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-          <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-          <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-        </p>
-          <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-          [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Development
 
-## Description
+To start your application in the dev profile, run:
 
-[NestJS Framework](https://github.com/nestjs/nest) server project generated from official [JHipster NodeJS blueprint](https://github.com/jhipster/generator-jhipster-nodejs).
-
-## Installation
-
-```bash
-$ npm install
+```
+./mvnw
 ```
 
-## TypeORM configuration
+For further instructions on how to develop with JHipster, have a look at [Using JHipster in development][].
 
-### Define your prod database
+## Building for production
 
-For prod database configuration,
-in [src/orm.config.ts](src/orm.config.ts) change your **url** connection:
+### Packaging as jar
 
-```ts
-if(process.env.NODE_ENV==='prod'){
-  ormconfig = {
-      ...
-      url: 'YOUR CONNECTION URL',
-      logging: false,
-      synchronize: commonConf.SYNCRONIZE,
-      entities: commonConf.ENTITIES,
-      migrations: commonConf.MIGRATIONS,
-      cli: commonConf.CLI,
-      migrationsRun: commonConf.MIGRATIONS_RUN,
-  };
-}
+To build the final jar and optimize the solicitudes application for production, run:
 
 ```
 
-### Migration data and schema
+./mvnw -Pprod clean verify
 
-According [typeORM migration guide](https://github.com/typeorm/typeorm/blob/master/docs/migrations.md),
-there are under [src/migrations/](src/migrations/) the scripts to create the database schema and after to insert data seed.
-The scripts are automatically run in the first start up, and after anymore.
-
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# build and run in production mode
-$ set NODE_ENV=prod&& npm run build && npm run start:prod
-
-# run production build with node
-$ set NODE_ENV=prod&& node dist/main.js
-
-# build production bundle with webpack
-$ npm run webpack:prod
-
-# run production bundle with node (not require node_modules folder)
-$ node dist/bundle.js
-```
-
-> You can specify dev or prod NODE_ENV value (default is dev as indicated in [.env](.env))
-> The webpack build bundle automatically is configured for prod env, and **can run without node_modules**
-
-## Lint
-
-```bash
-# run lint
-$ npm run lint
-
-# fix lint issues
-$ npm run lint:fix
 
 ```
 
-## Debug
-
-```bash
-# run this and after you can execute debug task in VSCode
-$ npm run start:debug
+To ensure everything worked, run:
 
 ```
 
-## Test
+java -jar target/*.jar
 
-```bash
-# unit tests
-$ npm run test
-
-# lint
-$ npm run lint
-
-# fix lint issues
-$ npm run lint:fix
-
-# test coverage of unit tests
-$ npm run test:cov
-
-# e2e tests with full app coverage report
-$ npm run test:e2e
 
 ```
 
-## Support
+Refer to [Using JHipster in production][] for more details.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Packaging as war
 
-## Stay in touch
+To package your application as a war in order to deploy it to an application server, run:
 
-- Community - [jhipster homepage](https://www.jhipster.tech)
-- Stream Lead - [Angelo Manganiello](https://github.com/amanganiello90)
-- Website And Guide - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```
 
-## License
-
-Nest is [MIT licensed](LICENSE).
+./mvnw -Pprod,war clean verify
 
 
-http://localhost:8081/api/v2/api-docs/#/gestions/get_api_gestions_solicitud__idsolicitud_
+```
+
+## Testing
+
+To launch your application's tests, run:
+
+```
+./mvnw verify
+```
+
+For more information, refer to the [Running tests page][].
+
+### Code quality
+
+Sonar is used to analyse code quality. You can start a local Sonar server (accessible on http://localhost:9001) with:
+
+```
+docker-compose -f src/main/docker/sonar.yml up -d
+```
+
+You can run a Sonar analysis with using the [sonar-scanner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner) or by using the maven plugin.
+
+Then, run a Sonar analysis:
+
+```
+./mvnw -Pprod clean verify sonar:sonar
+```
+
+If you need to re-run the Sonar phase, please be sure to specify at least the `initialize` phase since Sonar properties are loaded from the sonar-project.properties file.
+
+```
+./mvnw initialize sonar:sonar
+```
+
+For more information, refer to the [Code quality page][].
+
+## Using Docker to simplify development (optional)
+
+You can use Docker to improve your JHipster development experience. A number of docker-compose configuration are available in the [src/main/docker](src/main/docker) folder to launch required third party services.
+
+For example, to start a mysql database in a docker container, run:
+
+```
+docker-compose -f src/main/docker/mysql.yml up -d
+```
+
+To stop it and remove the container, run:
+
+```
+docker-compose -f src/main/docker/mysql.yml down
+```
+
+You can also fully dockerize your application and all the services that it depends on.
+To achieve this, first build a docker image of your app by running:
+
+```
+./mvnw -Pprod verify jib:dockerBuild
+```
+
+Then run:
+
+```
+docker-compose -f src/main/docker/app.yml up -d
+```
+
+For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the docker-compose sub-generator (`jhipster docker-compose`), which is able to generate docker configurations for one or several JHipster applications.
+
+## Continuous Integration (optional)
+
+To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
+
+[jhipster homepage and latest documentation]: https://www.jhipster.tech
+[jhipster 6.10.5 archive]: https://www.jhipster.tech/documentation-archive/v6.10.5
+[using jhipster in development]: https://www.jhipster.tech/documentation-archive/v6.10.5/development/
+[using docker and docker-compose]: https://www.jhipster.tech/documentation-archive/v6.10.5/docker-compose
+[using jhipster in production]: https://www.jhipster.tech/documentation-archive/v6.10.5/production/
+[running tests page]: https://www.jhipster.tech/documentation-archive/v6.10.5/running-tests/
+[code quality page]: https://www.jhipster.tech/documentation-archive/v6.10.5/code-quality/
+[setting up continuous integration]: https://www.jhipster.tech/documentation-archive/v6.10.5/setting-up-ci/

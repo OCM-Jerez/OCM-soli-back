@@ -1,0 +1,58 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [
+    {
+      "relationshipName": "solicitud",
+      "otherEntityName": "solicitud",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "descripcion",
+      "otherEntityRelationshipName": "documento"
+    },
+    {
+      "relationshipName": "gestion",
+      "otherEntityName": "gestion",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "detalle",
+      "otherEntityRelationshipName": "documento"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "nombreDeDocumento",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fechaSubida",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "documento",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldName": "observacion",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ruta",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "privado",
+      "fieldType": "Boolean"
+    }
+  ],
+  "changelogDate": "20201217180625",
+  "dto": "mapstruct",
+  "searchEngine": false,
+  "service": "serviceImpl",
+  "entityTableName": "documento",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}
