@@ -111,6 +111,19 @@ public class DocumentoResource {
     }
 
     /**
+     * {@code GET  /documentos/solicitud/:solicitudId/usuario/usuarioId} : get the "id" documento.
+     *
+     * @param id the id of the documentoDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the documentoDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/documentos/solicitud/{solicitudId}/usuario/{usuarioId}")
+    public ResponseEntity<List<DocumentoDTO>> getDocumentoSolicitudes(@PathVariable Long solicitudId, @PathVariable Long usuarioId) {
+        log.debug("REST request to get a page of Documentos");
+        List<DocumentoDTO> page = documentoService.findAllByUsuarioAndSolicitud(solicitudId, usuarioId);
+        return ResponseEntity.ok().body(page);
+    }
+
+    /**
      * {@code DELETE  /documentos/:id} : delete the "id" documento.
      *
      * @param id the id of the documentoDTO to delete.

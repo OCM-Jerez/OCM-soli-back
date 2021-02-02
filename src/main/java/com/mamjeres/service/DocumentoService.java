@@ -1,6 +1,7 @@
 package com.mamjeres.service;
 
 import com.mamjeres.service.dto.DocumentoDTO;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,14 @@ public interface DocumentoService {
      * @return the list of entities.
      */
     Page<DocumentoDTO> findAll(Pageable pageable);
+
+    /**
+     *
+     * @param solicitudId
+     * @param usuarioId
+     * @return
+     */
+    List<DocumentoDTO> findAllByUsuarioAndSolicitud(Long solicitudId, Long usuarioId);
 
     /**
      * Get the "id" documento.
