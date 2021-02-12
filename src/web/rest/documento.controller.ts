@@ -39,6 +39,7 @@ export class DocumentoController {
 
   @Get('/')
   @Roles(RoleType.USER)
+  @ApiOperation({ title: 'Get all documentos' })
   @ApiResponse({
     status: 200,
     description: 'List all records',
@@ -65,6 +66,7 @@ export class DocumentoController {
   }
 
   @Get('/solicitud/:idsolicitud')
+  @ApiOperation({ title: 'Get all documentos of a solicitud' })
   @Roles(RoleType.USER)
   @ApiResponse({
     status: 200,
@@ -87,6 +89,7 @@ export class DocumentoController {
 
   @Get('/solicitud/:idsolicitud/usuario/:id')
   @Roles(RoleType.USER)
+  @ApiOperation({ title: 'Get all solicitudes of a user' })
   @ApiResponse({
     status: 200,
     description: 'List all records',
@@ -105,6 +108,7 @@ export class DocumentoController {
 
   @Get('/:id')
   @Roles(RoleType.USER)
+  @ApiOperation({ title: 'Get a documento by id' })
   @ApiResponse({
     status: 200,
     description: 'The found record',

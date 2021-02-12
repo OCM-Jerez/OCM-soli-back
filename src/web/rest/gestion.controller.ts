@@ -23,11 +23,11 @@ import { SolicitudService } from '../../service/solicitud.service';
 import Documento from '../../domain/documento.entity';
 import { UserService } from '../../service/user.service';
 
-@Controller('api/gestions')
+@Controller('api/gestiones')
 @UseGuards(AuthGuard, RolesGuard)
 @UseInterceptors(LoggingInterceptor)
 @ApiBearerAuth()
-@ApiUseTags('gestions')
+@ApiUseTags('gestiones')
 export class GestionController {
   logger = new Logger('GestionController');
 
@@ -87,6 +87,7 @@ export class GestionController {
 
   @Get('/solicitud/:idsolicitud/usuario/:id')
   @Roles(RoleType.USER)
+  @ApiOperation({ title: 'Get all gestiones' })
   @ApiResponse({
     status: 200,
     description: 'List all records',
@@ -104,6 +105,7 @@ export class GestionController {
 
   @Get('/:id')
   @Roles(RoleType.USER)
+  @ApiOperation({ title: 'Get a gestion by id' })
   @ApiResponse({
     status: 200,
     description: 'The found record',

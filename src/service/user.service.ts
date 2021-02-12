@@ -36,6 +36,7 @@ export class UserService {
   }
 
   async save(user: User): Promise<User | undefined> {
+    console.log(user);
     if(user.id){
       user.lastModifiedDate = new Date();
     } else {

@@ -10,8 +10,8 @@ import { HeaderUtil } from '../../client/header-util';
 
 @Controller('api')
 @UseInterceptors(LoggingInterceptor)
-@ApiBearerAuth()
-@ApiUseTags('register-resource')
+//@ApiBearerAuth()
+@ApiUseTags('user register')
 export class RegisterController {
   logger = new Logger('AccountController');
 
@@ -26,6 +26,8 @@ export class RegisterController {
   })
   async registerAccount(@Req() req: Request, @Body() user: User): Promise<User | any> {
     // return res.sendStatus(201);
+    // buscar usuario en la base de datos por el login para comprobar que no existe
+    // si existe retornar un json con mensaje de error
     console.log('registerAccount');
     const created = await this.userService.save(user);
     console.log('created');

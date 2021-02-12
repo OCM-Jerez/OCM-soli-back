@@ -12,14 +12,18 @@ import { UserService } from '../../service/user.service';
 @UseGuards(AuthGuard, RolesGuard)
 @UseInterceptors(LoggingInterceptor)
 @ApiBearerAuth()
-@ApiUseTags('user-resource')
+@ApiUseTags('users')
+
 export class UserController {
-  logger = new Logger('UserController');
+ logger = new Logger('UserController');
 
   constructor(private readonly userService: UserService) {}
 
+  // ====================================================================================================
   @Get('/')
   @Roles(RoleType.ADMIN)
+  @ApiOperation({ title: 'Get all users.' })
+
   @ApiResponse({
     status: 200,
     description: 'List all records',
@@ -35,22 +39,37 @@ export class UserController {
     HeaderUtil.addPaginationHeaders(req.res, new Page(results, count, pageRequest));
     return results;
   }
+  // ====================================================================================================
 
+  // ====================================================================================================
   @Post('/')
   @Roles(RoleType.ADMIN)
-  @ApiOperation({ title: 'Create user' })
+  @ApiOperation({ title: 'Create user.' })
+
   @ApiResponse({
     status: 201,
     description: 'The record has been successfully created.',
     type: User
   })
-  @ApiResponse({ status: 403, description: 'Forbidden.' })
+
+  @ApiResponse({ 
+     status: 403,
+     description: 'Forbidden.'
+     })
+
+  @ApiResponse({ 
+    status: 401,
+    description: 'Unauthorized.'
+    })
+
   async createUser(@Req() req: Request, @Body() user: User): Promise<User> {
     const created = await this.userService.save(user);
     HeaderUtil.addEntityCreatedHeaders(req.res, 'User', created.id);
     return created;
   }
+  // ====================================================================================================
 
+  // ====================================================================================================
   @Put('/')
   @Roles(RoleType.ADMIN)
   @ApiOperation({ title: 'Update user' })
@@ -63,8 +82,12 @@ export class UserController {
     HeaderUtil.addEntityCreatedHeaders(req.res, 'User', user.id);
     return await this.userService.update(user);
   }
+  // ====================================================================================================
 
+  // ====================================================================================================
   @Get('/:login')
+  @ApiOperation({ title: 'Get one user for his login.' })
+
   @ApiResponse({
     status: 200,
     description: 'The found record',
@@ -73,7 +96,9 @@ export class UserController {
   async getUser(@Param('login') loginValue: string): Promise<User> {
     return await this.userService.find({ where: { login: loginValue } });
   }
-
+ // ====================================================================================================
+ 
+ // ====================================================================================================
   @Delete('/:login')
   @ApiOperation({ title: 'Delete login user' })
   @ApiResponse({
@@ -87,3 +112,4 @@ export class UserController {
     return await this.userService.delete(userToDelete);
   }
 }
+// ====================================================================================================

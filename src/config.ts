@@ -20,7 +20,7 @@ export class Config {
   'jhipster.swagger.default-include-pattern' = '/api/.*';
   'jhipster.swagger.title' = 'OCMSoliServer API';
   'jhipster.swagger.description' = 'OCMSoliServer API documentation';
-  'jhipster.swagger.version' = '0.0.1';
+  'jhipster.swagger.version' = '1.0.1';
   'jhipster.swagger.path' = '/api/v2/api-docs';
   'crypto.key' = '3772c1cdbd27c225735d116d1e4c5421a3aec26c919cc7ab457f21a4d16a1821';
   'crypto.iv' = '54f3ad979d9262d3a2dd4489531daf34';
@@ -67,8 +67,8 @@ const yamlConfigPath = path.join(__dirname, 'config', 'application.yml');
 const envYamlConfigPath = path.join(__dirname, 'config', `application-${process.env.NODE_ENV}.yml`);
 
 const yamlConfig = yaml.safeLoad(fs.readFileSync(yamlConfigPath, 'utf8'));
-logger.log(`Actual process.env.NODE_ENV value: ${process.env.NODE_ENV}`);
-logger.log('Standard allowed values are: dev, test or prod');
+// logger.log(`Actual process.env.NODE_ENV value: ${process.env.NODE_ENV}`);
+// logger.log('Standard allowed values are: dev, test or prod');
 if (!fs.existsSync(envYamlConfigPath)) {
   logger.error(
     'does not exist under your config folder an application-{process.env.NODE_ENV}.yml file with your process.env.NODE_ENV value'

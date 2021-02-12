@@ -10,7 +10,7 @@ import { AuthService } from '../../service/auth.service';
 @UseInterceptors(LoggingInterceptor)
 @UseGuards(AuthGuard, RolesGuard)
 @ApiBearerAuth()
-@ApiUseTags('account-resource')
+@ApiUseTags('account')
 export class AccountController {
   logger = new Logger('AccountController');
 

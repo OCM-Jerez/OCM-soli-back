@@ -8,11 +8,11 @@ import { AuthGuard, Roles, RolesGuard, RoleType } from '../../security';
 import { HeaderUtil } from '../../client/header-util';
 import { LoggingInterceptor } from '../../client/interceptors/logging.interceptor';
 
-@Controller('api/solicituds')
+@Controller('api/solicitudes')
 @UseGuards(AuthGuard, RolesGuard)
 @UseInterceptors(LoggingInterceptor)
 @ApiBearerAuth()
-@ApiUseTags('solicituds')
+@ApiUseTags('solicitudes')
 export class SolicitudController {
   logger = new Logger('SolicitudController');
 
@@ -20,6 +20,7 @@ export class SolicitudController {
 
   @Get('/')
   @Roles(RoleType.USER)
+  @ApiOperation({ title: 'Get all solicitudes' })
   @ApiResponse({
     status: 200,
     description: 'List all records',
@@ -38,6 +39,7 @@ export class SolicitudController {
 
   @Get('/:id')
   @Roles(RoleType.USER)
+  @ApiOperation({ title: 'Get a solicitud by id' })
   @ApiResponse({
     status: 200,
     description: 'The found record',

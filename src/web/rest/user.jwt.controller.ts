@@ -7,7 +7,7 @@ import { ApiUseTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
 
 @Controller('api')
 @UseInterceptors(LoggingInterceptor)
-@ApiUseTags('user-jwt-controller')
+@ApiUseTags('user-jwt')
 export class UserJWTController {
   logger = new Logger('UserJWTController');
 
