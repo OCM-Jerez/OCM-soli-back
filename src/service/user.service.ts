@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FindManyOptions, FindOneOptions } from 'typeorm';
+
 import { User } from '../domain/user.entity';
 import { UserRepository } from '../repository/user.repository';
-import { FindManyOptions, FindOneOptions } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -11,6 +12,11 @@ export class UserService {
   async findById(id: string): Promise<User | undefined> {
     const result = await this.userRepository.findOne(id);
     return this.flatAuthorities(result);
+  }
+
+  async findByLogin(login: string): Promise<User | undefined> {
+    const result = await this.userRepository.findOne({ where: {login: login}});
+    return result;
   }
 
   async findByfields(options: FindOneOptions<User>): Promise<User | undefined> {

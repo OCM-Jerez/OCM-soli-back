@@ -1,5 +1,6 @@
 import { Body, Param, Post, Res, UseGuards, Controller, Get, Logger, Req, UseInterceptors } from '@nestjs/common';
 import { Response, Request } from 'express';
+
 import { AuthGuard, RolesGuard } from '../../security';
 import { User } from '../../domain/user.entity';
 import { LoggingInterceptor } from '../../client/interceptors/logging.interceptor';
@@ -15,7 +16,7 @@ import { HeaderUtil } from '../../client/header-util';
 export class RegisterController {
   logger = new Logger('AccountController');
 
-  constructor(private readonly authService: AuthService, private readonly userService: UserService) {}
+  constructor(private readonly authService: AuthService, private readonly userService: UserService) { }
 
   @Post('/register')
   @ApiOperation({ title: 'Register user' })
@@ -24,15 +25,20 @@ export class RegisterController {
     description: 'Registered user',
     type: User
   })
-  async registerAccount(@Req() req: Request, @Body() user: User): Promise<User | any> {
-    // return res.sendStatus(201);
-    // buscar usuario en la base de datos por el login para comprobar que no existe
-    // si existe retornar un json con mensaje de error
-    console.log('registerAccount');
-    const created = await this.userService.save(user);
-    console.log('created');
-    console.log(created);
-    HeaderUtil.addEntityCreatedHeaders(req.res, 'user', created.id);
-    return created;
+
+  async registerAccount(@Req() req: Request, @Body() user: User): Promise<boolean> {
+    // Buscar usuario en la base de datos por el login para comprobar que no existe
+    const loginExist = await this.userService.findByLogin(user.login);
+
+    if (loginExist) {
+      console.log(loginExist);
+      console.log("El login ya existe");
+      return true
+    } else {
+      console.log(loginExist);
+      const created = await this.userService.save(user);
+      HeaderUtil.addEntityCreatedHeaders(req.res, 'user', created.id);
+      return false;
+    }
   }
 }
