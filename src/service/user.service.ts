@@ -19,6 +19,11 @@ export class UserService {
     return result;
   }
 
+  async findByEmail(email: string): Promise<User | undefined> {
+    const result = await this.userRepository.findOne({ where: {email: email}});
+    return result;
+  }
+
   async findByfields(options: FindOneOptions<User>): Promise<User | undefined> {
     options.relations = ['authorities'];
     const result = await this.userRepository.findOne(options);

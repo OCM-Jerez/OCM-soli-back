@@ -19,10 +19,10 @@ export class RegisterController {
   constructor(private readonly authService: AuthService, private readonly userService: UserService) { }
 
   @Post('/register')
-  @ApiOperation({ title: 'Register user' })
+  @ApiOperation({ title: 'Comprueba si existe el login' })
   @ApiResponse({
     status: 201,
-    description: 'Registered user',
+    description: 'Comprueba si existe el login',
     type: User
   })
 
@@ -36,9 +36,39 @@ export class RegisterController {
       return true
     } else {
       console.log(loginExist);
-      const created = await this.userService.save(user);
-      HeaderUtil.addEntityCreatedHeaders(req.res, 'user', created.id);
+      // const created = await this.userService.save(user);
+      // HeaderUtil.addEntityCreatedHeaders(req.res, 'user', created.id);
       return false;
     }
   }
+
+
+  @Post('/registerEmail')
+  @ApiOperation({ title: 'Comprueba si existe el email' })
+  @ApiResponse({
+    status: 201,
+    description: 'Comprueba si existe el email',
+    type: User
+  })
+
+  async registerEmail(@Req() req: Request, @Body() user: User): Promise<boolean> {
+    // Buscar usuario en la base de datos por el email para comprobar que no existe
+    const emailExist = await this.userService.findByEmail(user.email);
+
+    if (emailExist) {
+      console.log(user.email);
+      console.log("El email ya existe");
+      return true
+    } else {
+      console.log(user.email);
+      console.log("El email no existe");
+      // const created = await this.userService.save(user);
+      // HeaderUtil.addEntityCreatedHeaders(req.res, 'user', created.id);
+      return false;
+    }
+  }
+
+
+
+
 }
