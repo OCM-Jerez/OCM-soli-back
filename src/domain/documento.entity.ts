@@ -23,6 +23,7 @@ export default class Documento extends BaseEntity {
 
   @Column({ name: 'documento_content_type', nullable: true })
   documentoContentType: string;
+  
   @Column({ name: 'observacion', nullable: true })
   observacion: string;
 

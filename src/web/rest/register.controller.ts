@@ -16,9 +16,24 @@ import { HeaderUtil } from '../../client/header-util';
 export class RegisterController {
   logger = new Logger('AccountController');
 
-  constructor(private readonly authService: AuthService, private readonly userService: UserService) { }
+  constructor(private readonly authService: AuthService,
+    private readonly userService: UserService) { }
 
   @Post('/register')
+  @ApiOperation({ title: 'Save user' })
+  @ApiResponse({
+    status: 201,
+    description: 'Save user',
+    type: User
+  })
+
+  async register(@Req() req: Request, @Body() user: User): Promise<boolean> {
+    const created = await this.userService.save(user);
+    HeaderUtil.addEntityCreatedHeaders(req.res, 'user', created.id);
+    return true
+  }
+
+  @Post('/registerLogin')
   @ApiOperation({ title: 'Comprueba si existe el login' })
   @ApiResponse({
     status: 201,
@@ -26,22 +41,19 @@ export class RegisterController {
     type: User
   })
 
-  async registerAccount(@Req() req: Request, @Body() user: User): Promise<boolean> {
-    // Buscar usuario en la base de datos por el login para comprobar que no existe
+  async registerLogin(@Req() req: Request, @Body() user: User): Promise<boolean> {
     const loginExist = await this.userService.findByLogin(user.login);
 
     if (loginExist) {
-      console.log(loginExist);
+      console.log(user.login);
       console.log("El login ya existe");
       return true
     } else {
-      console.log(loginExist);
-      // const created = await this.userService.save(user);
-      // HeaderUtil.addEntityCreatedHeaders(req.res, 'user', created.id);
+      console.log(user.login);
+      console.log("El login no existe");
       return false;
     }
   }
-
 
   @Post('/registerEmail')
   @ApiOperation({ title: 'Comprueba si existe el email' })
@@ -52,7 +64,6 @@ export class RegisterController {
   })
 
   async registerEmail(@Req() req: Request, @Body() user: User): Promise<boolean> {
-    // Buscar usuario en la base de datos por el email para comprobar que no existe
     const emailExist = await this.userService.findByEmail(user.email);
 
     if (emailExist) {
@@ -62,8 +73,6 @@ export class RegisterController {
     } else {
       console.log(user.email);
       console.log("El email no existe");
-      // const created = await this.userService.save(user);
-      // HeaderUtil.addEntityCreatedHeaders(req.res, 'user', created.id);
       return false;
     }
   }
