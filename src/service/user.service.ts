@@ -26,8 +26,17 @@ export class UserService {
 
   async findByfields(options: FindOneOptions<User>): Promise<User | undefined> {
     options.relations = ['authorities'];
-    const result = await this.userRepository.findOne(options);
-    return this.flatAuthorities(result);
+    console.log('2º paso', options);
+    try {
+       const result = await this.userRepository.findOne(options);
+       
+       return this.flatAuthorities(result);
+    } catch (error) {
+      console.log(error);
+    }
+    
+    
+   
   }
 
   async find(options: FindManyOptions<User>): Promise<User | undefined> {
@@ -76,6 +85,7 @@ export class UserService {
       user.authorities.forEach(authority => authorities.push(authority.name));
       user.authorities = authorities;
     }
+    console.log('3er paso', user);
     return user;
   }
 

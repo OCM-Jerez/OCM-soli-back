@@ -5,7 +5,7 @@ import { ApiModelProperty } from '@nestjs/swagger';
 import { config } from '../config';
 import { EncryptionTransformer } from 'typeorm-encrypted';
 
-@Entity('jhi_user')
+@Entity('user')
 export class User extends BaseEntity {
   @ApiModelProperty({ uniqueItems: true, example: 'myuser', description: 'User login' })
   @Column({ unique: true })
@@ -51,4 +51,9 @@ export class User extends BaseEntity {
   resetKey?: string;
   @Column({ nullable: true })
   resetDate?: Date;
+
+
+  @ApiModelProperty({ example: 'PEPILLO', description: 'APODO DE USUARIO' })
+  @Column()
+  apodo: string;
 }
