@@ -42,6 +42,7 @@ export class DocumentoService {
   }
 
   async findAll(options: FindManyOptions<Documento>, user: User): Promise<Documento[]> {
+    console.log(user);
     options.relations = relationshipNames;
 
     const result = await this.userRepository.findOne({ where: { id: user.id }, relations: ['authorities'] });
@@ -56,23 +57,23 @@ export class DocumentoService {
     const docuFiltered = [];
     documentos.forEach(docu => {
       if(docu.privado === false) {
-        const blob = docu.documento.toString('hex');
+        // const blob = docu.documento.toString('hex');
         var result = '';
-        for (var i = 0; i < blob.length; i = i + 2) {
-          var decval = parseInt(blob.substr(i, 2), 16);
-          result = result + String.fromCharCode(decval);
-        }
-        docu.documento = result;
+        // for (var i = 0; i < blob.length; i = i + 2) {
+        //   var decval = parseInt(blob.substr(i, 2), 16);
+        //   result = result + String.fromCharCode(decval);
+        // }
+        // docu.documento = result;
         docuFiltered.push(docu);
       }
       if(userResp.authorities.filter(auth => auth === 'ROLE_ADMIN').length > 0 && docu.privado === true) {
         const blob = docu.documento.toString('hex');
         var result = '';
-        for (var i = 0; i < blob.length; i = i + 2) {
-          var decval = parseInt(blob.substr(i, 2), 16);
-          result = result + String.fromCharCode(decval);
-        }
-        docu.documento = result;
+        // for (var i = 0; i < blob.length; i = i + 2) {
+        //   var decval = parseInt(blob.substr(i, 2), 16);
+        //   result = result + String.fromCharCode(decval);
+        // }
+        // docu.documento = result;
         docuFiltered.push(docu);
       }
     });

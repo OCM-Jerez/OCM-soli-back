@@ -21,9 +21,9 @@ jhipster:
     from: OCMSoliServer@localhost
   swagger:
     default-include-pattern: /api/.*
-    title: OCMSoliServer API
-    description: OCMSoliServer API documentation
-    version: 0.0.1
+    title: OCM Solicitudes API
+    description: Solicitudes de documentación realizadas por el OCM al Ayuntamiento.
+    version: 1.0.1
     terms-of-service-url:
     contact-name:
     contact-url:

@@ -21,13 +21,14 @@ export class GestionService {
   async findById(id: string): Promise<Gestion | undefined> {
     const options = { relations: relationshipNames };
     const gestion = await this.gestionRepository.findOne(id, options);
-    const blob = gestion.documento.toString('hex');
-    var result = '';
-    for (var i = 0; i < blob.length; i = i + 2) {
-      var decval = parseInt(blob.substr(i, 2), 16);
-      result = result + String.fromCharCode(decval);
-    }
-    gestion.documento = result;
+      //TODO! restaurar esto
+    // const blob = gestion.documento.toString('hex');
+    // var result = '';
+    // for (var i = 0; i < blob.length; i = i + 2) {
+    //   var decval = parseInt(blob.substr(i, 2), 16);
+    //   result = result + String.fromCharCode(decval);
+    // }
+    // gestion.documento = result;
     return gestion;
   }
 

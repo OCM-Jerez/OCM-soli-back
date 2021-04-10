@@ -1,15 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne, ManyToOne, OneToMany, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, Column, ManyToOne } from 'typeorm';
 import { BaseEntity } from './base/base.entity';
-
-import { validate, Contains, IsInt, Length, IsEmail, IsFQDN, IsDate, Min, Max } from 'class-validator';
 
 import Solicitud from './solicitud.entity';
 import Gestion from './gestion.entity';
-
-/**
- * A Documento.
- */
 @Entity('documento')
 export default class Documento extends BaseEntity {
   @Column({ name: 'nombre_de_documento' })
@@ -41,5 +34,4 @@ export default class Documento extends BaseEntity {
   @ManyToOne(type => Gestion)
   gestion: Gestion;
 
-  // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 }

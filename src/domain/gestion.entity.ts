@@ -1,17 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne, ManyToOne, OneToMany, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, Column, ManyToOne } from 'typeorm';
 import { BaseEntity } from './base/base.entity';
 
-import { validate, Contains, IsInt, Length, IsEmail, IsFQDN, IsDate, Min, Max } from 'class-validator';
-
 import Solicitud from './solicitud.entity';
-
-/**
- * A Gestion.
- */
 @Entity('gestion')
 export default class Gestion extends BaseEntity {
-  @Column({ name: 'detalle' })
+  @Column({ name: 'detalle' , nullable: true})
   detalle: string;
 
   @Column({ type: 'date', name: 'fecha' })
@@ -37,5 +30,4 @@ export default class Gestion extends BaseEntity {
 
   solicitudId?: string;
 
-  // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 }

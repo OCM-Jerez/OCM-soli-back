@@ -52,15 +52,16 @@ export class GestionController {
       take: +pageRequest.size,
       order: pageRequest.sort.asOrder()
     });
-    results.forEach(gestion => {
-      const blob = gestion.documento.toString('hex');
-      var result = '';
-      for (var i = 0; i < blob.length; i = i + 2) {
-        var decval = parseInt(blob.substr(i, 2), 16);
-        result = result + String.fromCharCode(decval);
-      }
-      gestion.documento = result;
-    });
+      //TODO! restaurar esto
+    // results.forEach(gestion => {
+    //   const blob = gestion.documento.toString('hex');
+    //   var result = '';
+    //   for (var i = 0; i < blob.length; i = i + 2) {
+    //     var decval = parseInt(blob.substr(i, 2), 16);
+    //     result = result + String.fromCharCode(decval);
+    //   }
+    //   gestion.documento = result;
+    // });
     HeaderUtil.addPaginationHeaders(req.res, new Page(results, count, pageRequest));
     return results;
   }
