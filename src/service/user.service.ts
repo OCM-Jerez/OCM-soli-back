@@ -26,17 +26,13 @@ export class UserService {
 
   async findByfields(options: FindOneOptions<User>): Promise<User | undefined> {
     options.relations = ['authorities'];
-    console.log('2º paso', options);
+    // console.log('2º paso', options);
     try {
        const result = await this.userRepository.findOne(options);
-       
        return this.flatAuthorities(result);
     } catch (error) {
       console.log(error);
     }
-    
-    
-   
   }
 
   async find(options: FindManyOptions<User>): Promise<User | undefined> {

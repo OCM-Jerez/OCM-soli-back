@@ -98,10 +98,10 @@ export class DocumentoController {
   })
   async getAllBySolicitudFilteredByUser(@Req() req: Request, @Param('idsolicitud') idsolicitud: string,
                                         @Param('id') id: string): Promise<Documento[]> {
+    // console.log('id:', id);                                  
     const user = await this.userService.findById(id);
-
     const solicitud = await this.solicitudService.findById(idsolicitud);
-    console.log(solicitud);
+    // console.log('User:', user);
     const pageRequest: PageRequest = new PageRequest(req.query.page, req.query.size, req.query.sort);
     const results = await this.documentoService.findAll({where: { solicitud: solicitud } }, user);
     return results;

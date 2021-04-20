@@ -16,11 +16,11 @@ export default class Gestion extends BaseEntity {
   @Column({ type: 'blob', name: 'documento', nullable: true })
   documento: any;
 
-  @Column({ name: 'documento_content_type', nullable: true })
-  documentoContentType: string;
+  @Column({ name: 'documentoType', nullable: true })
+  documentoType: string;
 
-  @Column({ name: 'nombre_de_documento' })
-  nombreDeDocumento: string;
+  @Column({ name: 'nombreDocumento' })
+  nombreDocumento: string;
 
   @Column({ type: 'boolean', name: 'privado', nullable: true })
   privado: boolean;

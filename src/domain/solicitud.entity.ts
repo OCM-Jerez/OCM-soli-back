@@ -7,19 +7,33 @@ export default class Solicitud extends BaseEntity {
   @Column({ name: 'descripcion' })
   descripcion: string;
 
-  @Column({ type: 'date', name: 'fecha_solicitud' })
+  @Column({ type: 'date', name: 'fechaSolicitud' })
   fechaSolicitud: any;
 
-  @Column({ type: 'date', name: 'fecha_respuesta', nullable: true })
+  @Column({ type: 'date', nullable: true })
+  fechaInicio: any;
+
+  @Column({ type: 'date', nullable: true })
   fechaRespuesta: any;
 
-  @Column({ name: 'observacion', nullable: true })
+  @Column({ type: 'date', nullable: true})
+  fechaReclamacionCTA: any;
+
+  @Column({ type: 'date', nullable: true })
+  fechaInicioCTA: any;
+
+  @Column({ type: 'date', nullable: true })
+  fechaRespuestaCTA: any;
+
+  @Column({ nullable: true })
   observacion: string;
 
-  @Column({ type: 'blob', name: 'documento', nullable: true })
-  documento: any;
+  @Column({ nullable: true })
+  isAdmitida: boolean;
 
-  @Column({ name: 'documento_content_type', nullable: true })
-  documentoContentType: string;
+  @Column({ nullable: true })
+  isReclamadaCTA: boolean;
 
+  @Column({ name: 'calidadRespuesta', nullable: true })
+  calidadRespuesta: number;
 }
