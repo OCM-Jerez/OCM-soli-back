@@ -17,18 +17,11 @@ export class DocumentoService {
   constructor(
     @InjectRepository(DocumentoRepository) private documentoRepository: DocumentoRepository,
     private userRepository: UserRepository
-  ) {}
+  ) { }
 
   async findById(id: string): Promise<Documento | undefined> {
     const options = { relations: relationshipNames };
     const documento = await this.documentoRepository.findOne(id, options);
-    // const blob = documento.documento.toString('hex');
-    var result = '';
-    // for (var i = 0; i < blob.length; i = i + 2) {
-    //   var decval = parseInt(blob.substr(i, 2), 16);
-    //   result = result + String.fromCharCode(decval);
-    // }
-    // documento.documento = result;
     return documento;
   }
 
@@ -50,30 +43,36 @@ export class DocumentoService {
     console.log(userResp);
     console.log(userResp.authorities);
     const documentos = await this.documentoRepository.find(options);
+
     const docuFiltered = [];
     documentos.forEach(docu => {
-      if(docu.privado === false) {
-        // const blob = docu.documento.toString('hex');
-        var result = '';
-        // for (var i = 0; i < blob.length; i = i + 2) {
-        //   var decval = parseInt(blob.substr(i, 2), 16);
-        //   result = result + String.fromCharCode(decval);
-        // }
-        // docu.documento = result;
+      if (docu.privado === false) {
         docuFiltered.push(docu);
       }
-      if(userResp.authorities.filter(auth => auth === 'ROLE_ADMIN').length > 0 && docu.privado === true) {
-        // const blob = docu.documento.toString('hex');
-        var result = '';
-        // for (var i = 0; i < blob.length; i = i + 2) {
-        //   var decval = parseInt(blob.substr(i, 2), 16);
-        //   result = result + String.fromCharCode(decval);
-        // }
-        // docu.documento = result;
+      if (userResp.authorities.filter(auth => auth === 'ROLE_ADMIN').length > 0 && docu.privado === true) {
         docuFiltered.push(docu);
       }
     });
+    return docuFiltered;
+  }
 
+  async findByDocumentoType(options: FindManyOptions<Documento>, user: User): Promise<Documento[]> {
+    options.relations = relationshipNames;
+    //const result = await this.userRepository.findOne({ where: { id: tipo } });
+    const result = await this.userRepository.findOne({ where: { id: user.id }, relations: ['authorities'] });
+
+    const userResp = this.flatAuthorities(result);
+    const documentos = await this.documentoRepository.find(options);
+
+    const docuFiltered = [];
+    documentos.forEach(docu => {
+      if (docu.privado === false) {
+        docuFiltered.push(docu);
+      }
+      if (userResp.authorities.filter(auth => auth === 'ROLE_ADMIN').length > 0 && docu.privado === true) {
+        docuFiltered.push(docu);
+      }
+    });
     return docuFiltered;
   }
 

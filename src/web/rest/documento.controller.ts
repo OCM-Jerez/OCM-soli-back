@@ -107,6 +107,27 @@ export class DocumentoController {
     return results;
   }
 
+  @Get('/solicitud/:idsolicitud/documentotype/:tipo/:userid')
+  @Roles(RoleType.USER)
+  @ApiOperation({ title: 'Get all solicitudes of a documentoType' })
+  @ApiResponse({
+    status: 200,
+    description: 'List all records',
+    type: Documento
+  })
+  async getAllBySolicitudFilteredByDocumentoType(@Req() req: Request, @Param('idsolicitud') idsolicitud: string,
+                                        @Param('tipo') tipo: string,  @Param('userid') userid: string): Promise<Documento[]> {
+    // console.log('id:', id);                                  
+    const user = await this.userService.findById(userid);
+    const solicitud = await this.solicitudService.findById(idsolicitud);
+    // console.log('User:', user);
+    const pageRequest: PageRequest = new PageRequest(req.query.page, req.query.size, req.query.sort);
+    const results = await this.documentoService.findByDocumentoType({where: { solicitud: solicitud, documentoType: tipo } }, user); // select * from documento where solicitudid= ... and documentoTYpe
+    return results;
+  }
+
+
+
   @Get('/:id')
   @Roles(RoleType.USER)
   @ApiOperation({ title: 'Get a documento by id' })
