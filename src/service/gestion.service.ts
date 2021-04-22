@@ -55,35 +55,18 @@ export class GestionService {
 
   async findAll(options: FindManyOptions<Gestion>, user: User): Promise<Gestion[]> {
     options.relations = relationshipNames;
-
     const result = await this.userRepository.findOne({ where: { id: user.id }, relations: ['authorities'] });
     const userResp = this.flatAuthorities(result);
-
     const gestions = await this.gestionRepository.find(options);
     const docuFiltered = [];
     gestions.forEach(gestion => {
       if(gestion.privado === false) {
-        const blob = gestion.documento.toString('hex');
-        var result = '';
-        for (var i = 0; i < blob.length; i = i + 2) {
-          var decval = parseInt(blob.substr(i, 2), 16);
-          result = result + String.fromCharCode(decval);
-        }
-        gestion.documento = result;
         docuFiltered.push(gestion);
       }
       if(userResp.authorities.filter(auth => auth === 'ROLE_ADMIN').length > 0 && gestion.privado === true) {
-        const blob = gestion.documento.toString('hex');
-        var result = '';
-        for (var i = 0; i < blob.length; i = i + 2) {
-          var decval = parseInt(blob.substr(i, 2), 16);
-          result = result + String.fromCharCode(decval);
-        }
-        gestion.documento = result;
         docuFiltered.push(gestion);
       }
     });
-
     return docuFiltered;
   }
 

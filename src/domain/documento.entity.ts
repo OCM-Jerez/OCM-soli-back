@@ -1,5 +1,6 @@
 import { Entity, Column, ManyToOne } from 'typeorm';
 import { BaseEntity } from './base/base.entity';
+
 import Solicitud from './solicitud.entity';
 
 @Entity('documento')

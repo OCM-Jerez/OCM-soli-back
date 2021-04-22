@@ -1,7 +1,13 @@
+1.- ¿Se puede borrar una unica tabla y regenerarla?
+
+
+
+
+
+
+
 ¿Donde creea los user?
     src-migrations-1570200490072-SeedUsersRoles.ts
-
-
 
     copias en:
     C:\Users\pc\Documents\dumps\Dump20210419.sql

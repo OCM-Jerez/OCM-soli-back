@@ -101,6 +101,7 @@ export class GestionController {
     const results = await this.gestionService.findAll({
       where: { solicitud: solicitud }
     }, user);
+    console.log(results);
     return results;
   }
 

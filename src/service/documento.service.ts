@@ -35,15 +35,10 @@ export class DocumentoService {
   }
 
   async findAll(options: FindManyOptions<Documento>, user: User): Promise<Documento[]> {
-    console.log(user);
     options.relations = relationshipNames;
     const result = await this.userRepository.findOne({ where: { id: user.id }, relations: ['authorities'] });
-    console.log(result);
     const userResp = this.flatAuthorities(result);
-    console.log(userResp);
-    console.log(userResp.authorities);
     const documentos = await this.documentoRepository.find(options);
-
     const docuFiltered = [];
     documentos.forEach(docu => {
       if (docu.privado === false) {
