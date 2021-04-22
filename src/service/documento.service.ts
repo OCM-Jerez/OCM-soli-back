@@ -8,7 +8,6 @@ import { UserRepository } from '../repository/user.repository';
 
 const relationshipNames = [];
 relationshipNames.push('solicitud');
-// relationshipNames.push('gestion');
 
 @Injectable()
 export class DocumentoService {
@@ -91,4 +90,5 @@ export class DocumentoService {
     }
     return user;
   }
+  
 }

@@ -19,7 +19,6 @@ export class UserController {
 
   constructor(private readonly userService: UserService) {}
 
-  // ====================================================================================================
   @Get('/')
   @Roles(RoleType.ADMIN)
   @ApiOperation({ title: 'Get all users.' })
@@ -39,9 +38,7 @@ export class UserController {
     HeaderUtil.addPaginationHeaders(req.res, new Page(results, count, pageRequest));
     return results;
   }
-  // ====================================================================================================
 
-  // ====================================================================================================
   @Post('/')
   @Roles(RoleType.ADMIN)
   @ApiOperation({ title: 'Create user.' })
@@ -67,9 +64,7 @@ export class UserController {
     HeaderUtil.addEntityCreatedHeaders(req.res, 'User', created.id);
     return created;
   }
-  // ====================================================================================================
 
-  // ====================================================================================================
   @Put('/')
   @Roles(RoleType.ADMIN)
   @ApiOperation({ title: 'Update user' })
@@ -82,12 +77,9 @@ export class UserController {
     HeaderUtil.addEntityCreatedHeaders(req.res, 'User', user.id);
     return await this.userService.update(user);
   }
-  // ====================================================================================================
 
-  // ====================================================================================================
   @Get('/:login')
   @ApiOperation({ title: 'Get one user for his login.' })
-
   @ApiResponse({
     status: 200,
     description: 'The found record',
@@ -96,9 +88,7 @@ export class UserController {
   async getUser(@Param('login') loginValue: string): Promise<User> {
     return await this.userService.find({ where: { login: loginValue } });
   }
- // ====================================================================================================
  
- // ====================================================================================================
   @Delete('/:login')
   @ApiOperation({ title: 'Delete login user' })
   @ApiResponse({
@@ -111,5 +101,5 @@ export class UserController {
     const userToDelete = await this.userService.find({ where: { login: loginValue } });
     return await this.userService.delete(userToDelete);
   }
+  
 }
-// ====================================================================================================

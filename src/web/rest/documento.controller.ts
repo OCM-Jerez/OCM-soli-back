@@ -52,16 +52,7 @@ export class DocumentoController {
       take: +pageRequest.size,
       order: pageRequest.sort.asOrder()
     });
-    //TODO! restaurar esto
-    // results.forEach(documento => {
-      // const blob = documento.documento.toString('hex');
-      // var result = '';
-      // for (var i = 0; i < blob.length; i = i + 2) {
-      //   var decval = parseInt(blob.substr(i, 2), 16);
-      //   result = result + String.fromCharCode(decval);
-      // }
-      // documento.documento = result;
-    // });
+   
     HeaderUtil.addPaginationHeaders(req.res, new Page(results, count, pageRequest));
     return results;
   }
@@ -97,13 +88,11 @@ export class DocumentoController {
     type: Documento
   })
   async getAllBySolicitudFilteredByUser(@Req() req: Request, @Param('idsolicitud') idsolicitud: string,
-                                        @Param('id') id: string): Promise<Documento[]> {
-    // console.log('id:', id);                                  
+    @Param('id') id: string): Promise<Documento[]> {
     const user = await this.userService.findById(id);
     const solicitud = await this.solicitudService.findById(idsolicitud);
-    // console.log('User:', user);
     const pageRequest: PageRequest = new PageRequest(req.query.page, req.query.size, req.query.sort);
-    const results = await this.documentoService.findAll({where: { solicitud: solicitud } }, user);
+    const results = await this.documentoService.findAll({ where: { solicitud: solicitud } }, user);
     return results;
   }
 
@@ -116,17 +105,13 @@ export class DocumentoController {
     type: Documento
   })
   async getAllBySolicitudFilteredByDocumentoType(@Req() req: Request, @Param('idsolicitud') idsolicitud: string,
-                                        @Param('tipo') tipo: string,  @Param('userid') userid: string): Promise<Documento[]> {
-    // console.log('id:', id);                                  
+    @Param('tipo') tipo: string, @Param('userid') userid: string): Promise<Documento[]> {
     const user = await this.userService.findById(userid);
     const solicitud = await this.solicitudService.findById(idsolicitud);
-    // console.log('User:', user);
     const pageRequest: PageRequest = new PageRequest(req.query.page, req.query.size, req.query.sort);
-    const results = await this.documentoService.findByDocumentoType({where: { solicitud: solicitud, documentoType: tipo } }, user); // select * from documento where solicitudid= ... and documentoTYpe
+    const results = await this.documentoService.findByDocumentoType({ where: { solicitud: solicitud, documentoType: tipo } }, user);
     return results;
   }
-
-
 
   @Get('/:id')
   @Roles(RoleType.USER)
@@ -186,4 +171,5 @@ export class DocumentoController {
     const toDelete = await this.documentoService.findById(id);
     return await this.documentoService.delete(toDelete);
   }
+  
 }

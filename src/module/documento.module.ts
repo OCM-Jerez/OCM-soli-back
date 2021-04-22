@@ -8,7 +8,11 @@ import { UserModule } from './user.module';
 import { UserRepository } from '../repository/user.repository';
 
 @Module({
-  imports: [UserModule, SolicitudModule, TypeOrmModule.forFeature([DocumentoRepository, UserRepository])],
+  imports: [
+            UserModule,
+            SolicitudModule,
+            TypeOrmModule.forFeature([DocumentoRepository, UserRepository])
+           ],
   controllers: [DocumentoController],
   providers: [DocumentoService],
   exports: [DocumentoService]

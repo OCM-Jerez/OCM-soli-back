@@ -34,6 +34,6 @@ export default class Solicitud extends BaseEntity {
   @Column({ nullable: true })
   isReclamadaCTA: boolean;
 
-  @Column({ name: 'calidadRespuesta', nullable: true })
+  @Column({ nullable: true })
   calidadRespuesta: number;
 }

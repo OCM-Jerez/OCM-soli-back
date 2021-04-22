@@ -8,7 +8,10 @@ import { UserModule } from './user.module';
 import { UserRepository } from '../repository/user.repository';
 
 @Module({
-  imports: [UserModule, TypeOrmModule.forFeature([GestionRepository, UserRepository]), SolicitudModule],
+  imports: [
+           UserModule,
+           TypeOrmModule.forFeature([GestionRepository, UserRepository]), SolicitudModule
+           ],
   controllers: [GestionController],
   providers: [GestionService],
   exports: [GestionService]

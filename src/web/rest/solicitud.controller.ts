@@ -89,4 +89,5 @@ export class SolicitudController {
     const toDelete = await this.solicitudService.findById(id);
     return await this.solicitudService.delete(toDelete);
   }
+  
 }
