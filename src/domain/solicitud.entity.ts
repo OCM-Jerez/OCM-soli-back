@@ -36,4 +36,10 @@ export default class Solicitud extends BaseEntity {
 
   @Column({ nullable: true })
   calidadRespuesta: number;
+
+  @Column({ nullable: true })
+  year: number;
+
+  @Column({ nullable: true })
+  code: number;
 }
