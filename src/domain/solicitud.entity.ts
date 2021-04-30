@@ -25,14 +25,26 @@ export default class Solicitud extends BaseEntity {
   @Column({ type: 'date', nullable: true })
   fechaRespuestaCTA: any;
 
+  @Column({ type: 'date', nullable: true })
+  fechaRespuestaAytoCTA: any;
+
   @Column({ nullable: true })
   observacion: string;
+
+  @Column({ nullable: true })
+  observacionCTA: string;
 
   @Column({ nullable: true })
   isAdmitida: boolean;
 
   @Column({ nullable: true })
   isReclamadaCTA: boolean;
+  
+  @Column({ nullable: true })
+  isAtendidaCTA: boolean;
+
+  @Column({ nullable: true })
+  isCerrada: boolean;
 
   @Column({ nullable: true })
   calidadRespuesta: number;
@@ -42,4 +54,5 @@ export default class Solicitud extends BaseEntity {
 
   @Column({ nullable: true })
   code: number;
+
 }
