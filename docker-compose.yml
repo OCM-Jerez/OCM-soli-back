@@ -13,7 +13,7 @@ services:
       # You can use whatever password you like
       MYSQL_PASSWORD: 'root'
       # Password for root access
-      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'M163lr9u6j2v'
     ports:
       - 3306:3306
     expose:
@@ -29,7 +29,7 @@ services:
     ports:
       - '80:8081'
     environment:
-      - DATABASE_URL=mysql://root:root@data-base-server/OCMSoliServer # TODO Cambiar despues el usuario y contraseña
+      - DATABASE_URL=mysql://root:M163lr9u6j2v@data-base-server/OCMSoliServer # TODO Cambiar despues el usuario y contraseña
       - NODE_ENV=prod
     depends_on:
       - data-base-server
