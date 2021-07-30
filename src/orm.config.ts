@@ -14,7 +14,7 @@ let ormconfig: TypeOrmModuleOptions = {
   name: 'default',
   type: 'mysql',
   database: 'OCMSoliServer',
-  url: process.env.DATABASE_URL,
+  url: 'mysql://root:mamtrucha0121@localhost',
   logging: false,
   synchronize: commonConf.SYNCRONIZE,
   entities: commonConf.ENTITIES,
