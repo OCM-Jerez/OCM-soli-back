@@ -31,6 +31,9 @@ services:
     environment:
       - DATABASE_URL=mysql://root:M163lr9u6j2v@data-base-server/OCMSoliServer # TODO Cambiar despues el usuario y contraseña
       - NODE_ENV=prod
+      - HOSTNAME=ocmapi.org
+      - SSL=true
+      - NODE_SERVER_PORT=true
     depends_on:
       - data-base-server
     links:
