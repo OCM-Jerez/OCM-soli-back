@@ -8,7 +8,7 @@ const logger = new Logger('Config');
 export class Config {
   debugLogging = 'debug';
 
-  'server.port' = '8081';
+  'server.port' = '80';
   'jhipster.clientApp.name' = 'OCMSoliServer';
   'jhipster.registry.password' = 'admin';
   'jhipster.security.authentication.jwt.base64-secret' =
