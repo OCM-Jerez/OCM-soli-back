@@ -33,7 +33,7 @@ services:
       - NODE_ENV=prod
       - HOSTNAME=ocmapi.org
       - SSL=true
-      - NODE_SERVER_PORT=true
+      - NODE_SERVER_PORT=8081
     depends_on:
       - data-base-server
     links:
