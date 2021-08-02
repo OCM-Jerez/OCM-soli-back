@@ -15,6 +15,7 @@ const port = process.env.NODE_SERVER_PORT || config.get('server.port');
 async function bootstrap(): Promise<void> {
   console.log(process.env.KEY_PATH);
   console.log(process.env.CERT_PATH);
+  console.log(process.env.IP);
   const appOptions = {
     cors: true,
     httpsOptions: {
