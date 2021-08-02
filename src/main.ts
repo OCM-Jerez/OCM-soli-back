@@ -48,6 +48,7 @@ async function bootstrap(): Promise<void> {
   setupSwagger(app);
 
   // await app.listen(port, process.env.IP);
+  await app.init();
 
   http.createServer(server).listen(80);
   https.createServer(httpsOptions, server).listen(443);
