@@ -11,12 +11,15 @@ import * as bodyParser from 'body-parser';
 
 const logger: Logger = new Logger('Main');
 const port = process.env.NODE_SERVER_PORT || config.get('server.port');
-const hostname = process.env.HOSTNAME || 'localhost';
-const ssl = process.env.SSL === 'true' ? true : false;
 
 async function bootstrap(): Promise<void> {
 
-  const appOptions = { cors: true };
+  const appOptions = {
+    cors: true,
+    httpsOptions: {
+      key: fs.readFileSync(process.env.KEY_PATH),
+      cert: fs.readFileSync(process.env.CERT_PATH),
+    } };
   const app = await NestFactory.create(AppModule, appOptions);
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -36,12 +39,7 @@ async function bootstrap(): Promise<void> {
 
   setupSwagger(app);
 
-  // await app.listen(port);
-  await app.listen(port, hostname, () => {
-    const address =
-      'http' + (ssl ? 's' : '') + '://' + hostname + ':' + port + '/';
-    Logger.log('Listening at ' + address);
-  });
+  await app.listen(port);
   logger.log(`Application listening on port ${port}`);
 }
 
