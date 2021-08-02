@@ -40,7 +40,7 @@ async function bootstrap(): Promise<void> {
 
   setupSwagger(app);
 
-  await app.listen(port);
+  await app.listen(port, process.env.IP);
   logger.log(`Application listening on port ${port}`);
 }
 
