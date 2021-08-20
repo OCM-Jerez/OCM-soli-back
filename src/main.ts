@@ -11,7 +11,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as bodyParser from 'body-parser';
 import * as http from 'http';
-import {ExpressAdapter} from '@nestjs/platform-express';
+import { ExpressAdapter } from '@nestjs/platform-express';
 
 const logger: Logger = new Logger('Main');
 const port = process.env.NODE_SERVER_PORT || config.get('server.port');
@@ -25,7 +25,7 @@ async function bootstrap(): Promise<void> {
     cert: fs.readFileSync(process.env.CERT_PATH),
   };
   const appOptions = {
-    cors: true
+    cors: false
   };
   const server = express();
   const app = await NestFactory.create(AppModule, new ExpressAdapter(server),);
