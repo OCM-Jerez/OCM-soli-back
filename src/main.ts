@@ -28,7 +28,7 @@ async function bootstrap(): Promise<void> {
     cors: false
   };
   const server = express();
-  const app = await NestFactory.create(AppModule, new ExpressAdapter(server),);
+  const app = await NestFactory.create(AppModule, new ExpressAdapter(server), { cors: false });
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   app.useGlobalPipes(
