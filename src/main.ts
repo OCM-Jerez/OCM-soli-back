@@ -28,7 +28,7 @@ async function bootstrap(): Promise<void> {
     cors: false
   };
   const server = express();
-  const app = await NestFactory.create(AppModule, new ExpressAdapter(server), { cors: false });
+  const app = await NestFactory.create(AppModule, new ExpressAdapter(server), { cors: true });
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   app.useGlobalPipes(
@@ -36,6 +36,13 @@ async function bootstrap(): Promise<void> {
       exceptionFactory: (): BadRequestException => new BadRequestException('Validation error')
     })
   );
+
+  app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Accept');
+    next();
+  });
 
   const staticClientPath = path.join(__dirname, '../dist/classes/static');
   if (fs.existsSync(staticClientPath)) {
@@ -56,3 +63,6 @@ async function bootstrap(): Promise<void> {
 }
 
 bootstrap();
+
+
+
