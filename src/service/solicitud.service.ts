@@ -10,7 +10,7 @@ const relationshipNames = [];
 export class SolicitudService {
   logger = new Logger('SolicitudService');
 
-  constructor(@InjectRepository(SolicitudRepository) private solicitudRepository: SolicitudRepository) {}
+  constructor(@InjectRepository(SolicitudRepository) private solicitudRepository: SolicitudRepository) { }
 
   async findById(id: string): Promise<Solicitud | undefined> {
     const options = { relations: relationshipNames };
@@ -25,6 +25,12 @@ export class SolicitudService {
     options.relations = relationshipNames;
     return await this.solicitudRepository.findAndCount(options);
   }
+
+  async findAll(): Promise<Solicitud[]> {
+    const options = { relations: relationshipNames };
+    return await this.solicitudRepository.find(options);
+  }
+
 
   async save(solicitud: Solicitud): Promise<Solicitud | undefined> {
     return await this.solicitudRepository.save(solicitud);

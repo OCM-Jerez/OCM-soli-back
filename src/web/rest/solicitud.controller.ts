@@ -16,7 +16,7 @@ import { LoggingInterceptor } from '../../client/interceptors/logging.intercepto
 export class SolicitudController {
   logger = new Logger('SolicitudController');
 
-  constructor(private readonly solicitudService: SolicitudService) {}
+  constructor(private readonly solicitudService: SolicitudService) { }
 
   @Get('/')
   @Roles(RoleType.USER)
@@ -26,14 +26,8 @@ export class SolicitudController {
     description: 'List all records',
     type: Solicitud
   })
-  async getAll(@Req() req: Request): Promise<Solicitud[]> {
-    const pageRequest: PageRequest = new PageRequest(req.query.page, req.query.size, req.query.sort);
-    const [results, count] = await this.solicitudService.findAndCount({
-      skip: +pageRequest.page * pageRequest.size,
-      take: +pageRequest.size,
-      order: pageRequest.sort.asOrder()
-    });
-    HeaderUtil.addPaginationHeaders(req.res, new Page(results, count, pageRequest));
+  async getAll(): Promise<Solicitud[]> {
+    const results = await this.solicitudService.findAll();
     return results;
   }
 
@@ -89,5 +83,5 @@ export class SolicitudController {
     const toDelete = await this.solicitudService.findById(id);
     return await this.solicitudService.delete(toDelete);
   }
-  
+
 }
