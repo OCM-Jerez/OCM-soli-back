@@ -57,7 +57,7 @@ async function bootstrap(): Promise<void> {
   // await app.listen(port, process.env.IP);
   await app.init();
 
-  http.createServer(server).listen(80);
+  http.createServer(server).listen(8081);
   https.createServer(httpsOptions, server).listen(443);
   logger.log(`Application listening on port ${port}`);
 }
