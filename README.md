@@ -144,3 +144,6 @@ Nest is [MIT licensed](LICENSE).
 
 
 http://localhost:8081/api/v2/api-docs/#/gestions/get_api_gestions_solicitud__idsolicitud_
+
+
+IP=172.26.0.115
