@@ -18,6 +18,7 @@ export class AuthService {
   ) { }
 
   async login(userLogin: UserLoginDTO): Promise<any> {
+    console.log(userLogin);
     const loginUserName = userLogin.username;
     const loginPassword = userLogin.password;
     const userFind = await this.userService.findByfields({ where: { login: loginUserName, password: loginPassword } });
@@ -40,6 +41,7 @@ export class AuthService {
   }
 
   async findUserWithAuthById(userId: string): Promise<User | undefined> {
+
     const user: any = await this.userService.findByfields({ where: { id: userId } });
     return user;
   }

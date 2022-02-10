@@ -8,7 +8,7 @@ export function setupSwagger(app: INestApplication): any {
 
   const options = new DocumentBuilder()
     .setTitle(config.get('jhipster.swagger.title'))
-    .setSchemes('https')
+    .setSchemes('http')
     .setDescription(config.get('jhipster.swagger.description'))
     .setVersion(config.get('jhipster.swagger.version'))
     .addBearerAuth()

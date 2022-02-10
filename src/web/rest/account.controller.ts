@@ -14,7 +14,7 @@ import { AuthService } from '../../service/auth.service';
 export class AccountController {
   logger = new Logger('AccountController');
 
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Get('/activate')
   @ApiOperation({ title: 'Activate an account' })
@@ -33,6 +33,7 @@ export class AccountController {
     description: 'login authenticated'
   })
   isAuthenticated(@Req() req: Request): any {
+    console.log('isAuthenticated');
     const user: any = req.user;
     return user.login;
   }

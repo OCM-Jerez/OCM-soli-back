@@ -144,6 +144,10 @@ Nest is [MIT licensed](LICENSE).
 
 
 http://localhost:8081/api/v2/api-docs/#/gestions/get_api_gestions_solicitud__idsolicitud_
+http://localhost:4000/api/v2/api-docs/
+
+
+Rama que funciona correctamente testLocal
 
 
 IP=172.26.0.115

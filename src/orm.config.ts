@@ -13,9 +13,9 @@ const commonConf = {
 let ormconfig: TypeOrmModuleOptions = {
   name: 'default',
   type: 'mysql',
-  database: 'OCMSoliServer',
+  database: 'ocmsoliserver',
   url: process.env.DATABASE_URL,
-  logging: false,
+  logging: true,
   synchronize: commonConf.SYNCRONIZE,
   entities: commonConf.ENTITIES,
   migrations: commonConf.MIGRATIONS,

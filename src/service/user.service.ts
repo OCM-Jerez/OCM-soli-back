@@ -7,7 +7,7 @@ import { UserRepository } from '../repository/user.repository';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectRepository(UserRepository) private userRepository: UserRepository) {}
+  constructor(@InjectRepository(UserRepository) private userRepository: UserRepository) { }
 
   async findById(id: string): Promise<User | undefined> {
     const result = await this.userRepository.findOne(id);
@@ -15,12 +15,12 @@ export class UserService {
   }
 
   async findByLogin(login: string): Promise<User | undefined> {
-    const result = await this.userRepository.findOne({ where: {login: login}});
+    const result = await this.userRepository.findOne({ where: { login: login } });
     return result;
   }
 
   async findByEmail(email: string): Promise<User | undefined> {
-    const result = await this.userRepository.findOne({ where: {email: email}});
+    const result = await this.userRepository.findOne({ where: { email: email } });
     return result;
   }
 
@@ -28,8 +28,8 @@ export class UserService {
     options.relations = ['authorities'];
     // console.log('2º paso', options);
     try {
-       const result = await this.userRepository.findOne(options);
-       return this.flatAuthorities(result);
+      const result = await this.userRepository.findOne(options);
+      return this.flatAuthorities(result);
     } catch (error) {
       console.log(error);
     }
@@ -53,7 +53,7 @@ export class UserService {
 
   async save(user: User): Promise<User | undefined> {
     console.log(user);
-    if(user.id){
+    if (user.id) {
       user.lastModifiedDate = new Date();
     } else {
       user.activated = true;

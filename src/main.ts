@@ -1,34 +1,21 @@
-import * as https from 'https';
-
 require('dotenv').config({ path: '.env' });
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { setupSwagger } from './swagger';
 import { config } from './config';
 import { Logger, ValidationPipe, BadRequestException } from '@nestjs/common';
-import express from 'express';
+import * as express from 'express';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as bodyParser from 'body-parser';
-import * as http from 'http';
-import { ExpressAdapter } from '@nestjs/platform-express';
 
 const logger: Logger = new Logger('Main');
 const port = process.env.NODE_SERVER_PORT || config.get('server.port');
 
 async function bootstrap(): Promise<void> {
-  console.log(process.env.KEY_PATH);
-  console.log(process.env.CERT_PATH);
-  console.log(process.env.IP);
-  const httpsOptions = {
-    key: fs.readFileSync(process.env.KEY_PATH),
-    cert: fs.readFileSync(process.env.CERT_PATH),
-  };
-  const appOptions = {
-    cors: false
-  };
-  const server = express();
-  const app = await NestFactory.create(AppModule, new ExpressAdapter(server), { cors: true });
+
+  const appOptions = { cors: true };
+  const app = await NestFactory.create(AppModule, appOptions);
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   app.useGlobalPipes(
@@ -36,13 +23,6 @@ async function bootstrap(): Promise<void> {
       exceptionFactory: (): BadRequestException => new BadRequestException('Validation error')
     })
   );
-
-  app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Accept');
-    next();
-  });
 
   const staticClientPath = path.join(__dirname, '../dist/classes/static');
   if (fs.existsSync(staticClientPath)) {
@@ -54,15 +34,8 @@ async function bootstrap(): Promise<void> {
 
   setupSwagger(app);
 
-  // await app.listen(port, process.env.IP);
-  await app.init();
-
-  http.createServer(server).listen(80);
-  https.createServer(httpsOptions, server).listen(443);
+  await app.listen(port);
   logger.log(`Application listening on port ${port}`);
 }
 
 bootstrap();
-
-
-
