@@ -26,11 +26,23 @@ export class SolicitudService {
     return await this.solicitudRepository.findAndCount(options);
   }
 
+  async findAndCountMAM() {
+    return await this.solicitudRepository.findAndCount({
+      where: [
+        {
+          fechaReclamacionCTA: null
+        },
+        // {
+        //   email: Not(Like('%@example.com')),
+        // },
+      ],
+    });
+  }
+
   async findAll(): Promise<Solicitud[]> {
     const options = { relations: relationshipNames };
     return await this.solicitudRepository.find(options);
   }
-
 
   async save(solicitud: Solicitud): Promise<Solicitud | undefined> {
     return await this.solicitudRepository.save(solicitud);

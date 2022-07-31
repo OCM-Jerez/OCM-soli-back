@@ -43,6 +43,18 @@ export class SolicitudController {
     return await this.solicitudService.findById(id);
   }
 
+  @Get('/:CTA')
+  @Roles(RoleType.USER)
+  @ApiOperation({ title: 'Get solicitudes reclamadas al CTA' })
+  @ApiResponse({
+    status: 200,
+    description: 'The found records',
+    type: Solicitud
+  })
+  async findAndCount() {
+    return await this.solicitudService.findAndCountMAM();
+  }
+
   @PostMethod('/')
   @Roles(RoleType.USER)
   @ApiOperation({ title: 'Create solicitud' })
