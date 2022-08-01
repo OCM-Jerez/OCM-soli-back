@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindManyOptions, FindOneOptions } from 'typeorm';
+import { FindManyOptions, FindOneOptions, IsNull } from 'typeorm';
 import Solicitud from '../domain/solicitud.entity';
 import { SolicitudRepository } from '../repository/solicitud.repository';
 
@@ -26,11 +26,12 @@ export class SolicitudService {
     return await this.solicitudRepository.findAndCount(options);
   }
 
-  async findAndCountMAM() {
-    return await this.solicitudRepository.findAndCount({
+  async find() {
+    // this.logger.log(`find`);
+    return await this.solicitudRepository.find({
       where: [
         {
-          fechaReclamacionCTA: null
+          isReclamadaCTA: 1
         },
         // {
         //   email: Not(Like('%@example.com')),

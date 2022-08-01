@@ -43,7 +43,7 @@ export class SolicitudController {
     return await this.solicitudService.findById(id);
   }
 
-  @Get('/:CTA')
+  @Get('/:id/:CTA')
   @Roles(RoleType.USER)
   @ApiOperation({ title: 'Get solicitudes reclamadas al CTA' })
   @ApiResponse({
@@ -52,7 +52,7 @@ export class SolicitudController {
     type: Solicitud
   })
   async findAndCount() {
-    return await this.solicitudService.findAndCountMAM();
+    return await this.solicitudService.find();
   }
 
   @PostMethod('/')
