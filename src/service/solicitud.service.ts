@@ -26,7 +26,7 @@ export class SolicitudService {
     return await this.solicitudRepository.findAndCount(options);
   }
 
-  async find() {
+  async find(): Promise<Solicitud[]> {
     // this.logger.log(`find`);
     return await this.solicitudRepository.find({
       where: [
