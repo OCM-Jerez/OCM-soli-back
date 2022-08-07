@@ -43,6 +43,7 @@ export class SolicitudController {
     return await this.solicitudService.findById(id);
   }
 
+  // @Get('/cta')//50/cta/80
   @Get('/:id/:CTA')
   @Roles(RoleType.USER)
   @ApiOperation({ title: 'Get solicitudes reclamadas al CTA' })
@@ -53,6 +54,18 @@ export class SolicitudController {
   })
   async findAndCount() {
     return await this.solicitudService.find();
+  }
+
+  @Get('/:id/:Pendientes/:Pendientes')
+  @Roles(RoleType.USER)
+  @ApiOperation({ title: 'Get solicitudes pendientes' })
+  @ApiResponse({
+    status: 200,
+    description: 'The found records',
+    type: Solicitud
+  })
+  async findAndCount1() {
+    return await this.solicitudService.find1();
   }
 
   @PostMethod('/')
