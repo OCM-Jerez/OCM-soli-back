@@ -68,6 +68,18 @@ export class SolicitudController {
     return await this.solicitudService.find1();
   }
 
+  @Get('/:id/:Pendientes/:Pen/:CTA')
+  @Roles(RoleType.USER)
+  @ApiOperation({ title: 'Get solicitudes pendientes CTA' })
+  @ApiResponse({
+    status: 200,
+    description: 'The found records',
+    type: Solicitud
+  })
+  async findAndCount2() {
+    return await this.solicitudService.find2();
+  }
+
   @PostMethod('/')
   @Roles(RoleType.USER)
   @ApiOperation({ title: 'Create solicitud' })

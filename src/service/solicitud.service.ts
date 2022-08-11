@@ -33,6 +33,11 @@ export class SolicitudService {
     return await this.solicitudRepository.findAndCount(options);
   }
 
+  async findAndCount2(options: FindManyOptions<Solicitud>): Promise<[Solicitud[], number]> {
+    options.relations = relationshipNames;
+    return await this.solicitudRepository.findAndCount(options);
+  }
+
   async find(): Promise<Solicitud[]> {
     // this.logger.log(`find`);
     return await this.solicitudRepository.find({
@@ -47,9 +52,7 @@ export class SolicitudService {
     });
   }
 
-
   async find1(): Promise<Solicitud[]> {
-    // this.logger.log(`find`);
     return await this.solicitudRepository.find({
       where: [
         {
@@ -57,6 +60,21 @@ export class SolicitudService {
         },
         // {
         //   email: Not(Like('%@example.com')),
+        // },
+      ],
+    });
+  }
+
+  async find2(): Promise<Solicitud[]> {
+    return await this.solicitudRepository.find({
+      where: [
+        {
+          isReclamadaCTA: 1,
+          fechaRespuestaAytoCTA: IsNull(),
+          isCerrada: IsNull()
+        },
+        // {
+        //   fechaRespuestaAytoCTA: IsNull()
         // },
       ],
     });
