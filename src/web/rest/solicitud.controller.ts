@@ -18,6 +18,42 @@ export class SolicitudController {
 
   constructor(private readonly solicitudService: SolicitudService) { }
 
+  @Get('pendientes')
+  @Roles(RoleType.USER)
+  @ApiOperation({ title: 'Get solicitudes pendientes' })
+  @ApiResponse({
+    status: 200,
+    description: 'The found records',
+    type: Solicitud
+  })
+  async pendientes() {
+    return await this.solicitudService.findPendientes();
+  }
+
+  @Get('reclamadasCTA')
+  @Roles(RoleType.USER)
+  @ApiOperation({ title: 'Get solicitudes reclamadas al CTA' })
+  @ApiResponse({
+    status: 200,
+    description: 'The found records',
+    type: Solicitud
+  })
+  async reclamadasCTA() {
+    return await this.solicitudService.findReclamadasCTA();
+  }
+
+  @Get('pendientesCTA')
+  @Roles(RoleType.USER)
+  @ApiOperation({ title: 'Get solicitudes pendientes CTA' })
+  @ApiResponse({
+    status: 200,
+    description: 'The found records',
+    type: Solicitud
+  })
+  async pendientesCTA() {
+    return await this.solicitudService.findPendientesCTA();
+  }
+
   @Get('/')
   @Roles(RoleType.USER)
   @ApiOperation({ title: 'Get all solicitudes' })
@@ -41,43 +77,6 @@ export class SolicitudController {
   })
   async getOne(@Param('id') id: string): Promise<Solicitud> {
     return await this.solicitudService.findById(id);
-  }
-
-  // @Get('/cta')//50/cta/80
-  @Get('/:id/:CTA')
-  @Roles(RoleType.USER)
-  @ApiOperation({ title: 'Get solicitudes reclamadas al CTA' })
-  @ApiResponse({
-    status: 200,
-    description: 'The found records',
-    type: Solicitud
-  })
-  async findAndCount() {
-    return await this.solicitudService.find();
-  }
-
-  @Get('/:id/:Pendientes/:Pendientes')
-  @Roles(RoleType.USER)
-  @ApiOperation({ title: 'Get solicitudes pendientes' })
-  @ApiResponse({
-    status: 200,
-    description: 'The found records',
-    type: Solicitud
-  })
-  async findAndCount1() {
-    return await this.solicitudService.find1();
-  }
-
-  @Get('/:id/:Pendientes/:Pen/:CTA')
-  @Roles(RoleType.USER)
-  @ApiOperation({ title: 'Get solicitudes pendientes CTA' })
-  @ApiResponse({
-    status: 200,
-    description: 'The found records',
-    type: Solicitud
-  })
-  async findAndCount2() {
-    return await this.solicitudService.find2();
   }
 
   @PostMethod('/')

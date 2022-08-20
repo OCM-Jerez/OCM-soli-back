@@ -23,22 +23,35 @@ export class SolicitudService {
     return await this.solicitudRepository.findOne(options);
   }
 
-  async findAndCount(options: FindManyOptions<Solicitud>): Promise<[Solicitud[], number]> {
-    options.relations = relationshipNames;
-    return await this.solicitudRepository.findAndCount(options);
+  // async findAndCount(options: FindManyOptions<Solicitud>): Promise<[Solicitud[], number]> {
+  //   options.relations = relationshipNames;
+  //   return await this.solicitudRepository.findAndCount(options);
+  // }
+
+  // async findAndCount1(options: FindManyOptions<Solicitud>): Promise<[Solicitud[], number]> {
+  //   options.relations = relationshipNames;
+  //   return await this.solicitudRepository.findAndCount(options);
+  // }
+
+  // async findAndCount2(options: FindManyOptions<Solicitud>): Promise<[Solicitud[], number]> {
+  //   options.relations = relationshipNames;
+  //   return await this.solicitudRepository.findAndCount(options);
+  // }
+
+  async findPendientes(): Promise<Solicitud[]> {
+    return await this.solicitudRepository.find({
+      where: [
+        {
+          isCerrada: IsNull()
+        },
+        // {
+        //   email: Not(Like('%@example.com')),
+        // },
+      ],
+    });
   }
 
-  async findAndCount1(options: FindManyOptions<Solicitud>): Promise<[Solicitud[], number]> {
-    options.relations = relationshipNames;
-    return await this.solicitudRepository.findAndCount(options);
-  }
-
-  async findAndCount2(options: FindManyOptions<Solicitud>): Promise<[Solicitud[], number]> {
-    options.relations = relationshipNames;
-    return await this.solicitudRepository.findAndCount(options);
-  }
-
-  async find(): Promise<Solicitud[]> {
+  async findReclamadasCTA(): Promise<Solicitud[]> {
     // this.logger.log(`find`);
     return await this.solicitudRepository.find({
       where: [
@@ -52,20 +65,7 @@ export class SolicitudService {
     });
   }
 
-  async find1(): Promise<Solicitud[]> {
-    return await this.solicitudRepository.find({
-      where: [
-        {
-          isCerrada: IsNull()
-        },
-        // {
-        //   email: Not(Like('%@example.com')),
-        // },
-      ],
-    });
-  }
-
-  async find2(): Promise<Solicitud[]> {
+  async findPendientesCTA(): Promise<Solicitud[]> {
     return await this.solicitudRepository.find({
       where: [
         {
