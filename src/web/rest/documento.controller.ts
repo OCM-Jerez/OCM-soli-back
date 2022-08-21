@@ -37,6 +37,19 @@ export class DocumentoController {
   ) {
   }
 
+  @Get('todas')
+  // @Roles(RoleType.USER)
+  @ApiOperation({ title: 'Get all solicitudes' })
+  @ApiResponse({
+    status: 200,
+    description: 'List all records',
+    type: Documento
+  })
+  async getAllMAM(): Promise<Documento[]> {
+    const results = await this.documentoService.findAllMAM();
+    return results;
+  }
+
   @Get('/')
   @Roles(RoleType.USER)
   @ApiOperation({ title: 'Get all documentos' })
@@ -52,7 +65,7 @@ export class DocumentoController {
       take: +pageRequest.size,
       order: pageRequest.sort.asOrder()
     });
-   
+
     HeaderUtil.addPaginationHeaders(req.res, new Page(results, count, pageRequest));
     return results;
   }
@@ -171,5 +184,5 @@ export class DocumentoController {
     const toDelete = await this.documentoService.findById(id);
     return await this.documentoService.delete(toDelete);
   }
-  
+
 }

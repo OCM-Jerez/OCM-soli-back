@@ -33,6 +33,12 @@ export class DocumentoService {
     return await this.documentoRepository.findAndCount(options);
   }
 
+
+  async findAllMAM(): Promise<Documento[]> {
+    const options = { relations: relationshipNames };
+    return await this.documentoRepository.find(options);
+  }
+
   async findAll(options: FindManyOptions<Documento>, user: User): Promise<Documento[]> {
     options.relations = relationshipNames;
     const result = await this.userRepository.findOne({ where: { id: user.id }, relations: ['authorities'] });
@@ -90,5 +96,5 @@ export class DocumentoService {
     }
     return user;
   }
-  
+
 }
