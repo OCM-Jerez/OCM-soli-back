@@ -38,6 +38,19 @@ export class GestionController {
   ) {
   }
 
+  @Get('todas')
+  // @Roles(RoleType.USER)
+  @ApiOperation({ title: 'Get all gestiones' })
+  @ApiResponse({
+    status: 200,
+    description: 'List all records',
+    type: Documento
+  })
+  async getAllMAM(): Promise<Gestion[]> {
+    const results = await this.gestionService.findAllMAM();
+    return results;
+  }
+
   @Get('/')
   @Roles(RoleType.USER)
   @ApiResponse({
@@ -52,7 +65,7 @@ export class GestionController {
       take: +pageRequest.size,
       order: pageRequest.sort.asOrder()
     });
-      
+
     HeaderUtil.addPaginationHeaders(req.res, new Page(results, count, pageRequest));
     return results;
   }
@@ -86,7 +99,7 @@ export class GestionController {
     type: Documento
   })
   async getAllBySolicitudFilteredByUser(@Req() req: Request, @Param('idsolicitud') idsolicitud: string,
-                                        @Param('id') id: string): Promise<Gestion[]> {
+    @Param('id') id: string): Promise<Gestion[]> {
     const user = await this.userService.findById(id);
     const solicitud = await this.solicitudService.findById(idsolicitud);
     const results = await this.gestionService.findAll({
@@ -152,5 +165,5 @@ export class GestionController {
     const toDelete = await this.gestionService.findById(id);
     return await this.gestionService.delete(toDelete);
   }
-  
+
 }

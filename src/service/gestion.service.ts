@@ -16,7 +16,7 @@ export class GestionService {
   constructor(
     @InjectRepository(GestionRepository) private gestionRepository: GestionRepository,
     private userRepository: UserRepository
-  ) {}
+  ) { }
 
   async findById(id: string): Promise<Gestion | undefined> {
     const options = { relations: relationshipNames };
@@ -45,6 +45,11 @@ export class GestionService {
     return await this.gestionRepository.remove(gestion);
   }
 
+  async findAllMAM(): Promise<Gestion[]> {
+    const options = { relations: relationshipNames };
+    return await this.gestionRepository.find(options);
+  }
+
   async findAll(options: FindManyOptions<Gestion>, user: User): Promise<Gestion[]> {
     options.relations = relationshipNames;
     const result = await this.userRepository.findOne({ where: { id: user.id }, relations: ['authorities'] });
@@ -52,10 +57,10 @@ export class GestionService {
     const gestions = await this.gestionRepository.find(options);
     const docuFiltered = [];
     gestions.forEach(gestion => {
-      if(gestion.privado === false) {
+      if (gestion.privado === false) {
         docuFiltered.push(gestion);
       }
-      if(userResp.authorities.filter(auth => auth === 'ROLE_ADMIN').length > 0 && gestion.privado === true) {
+      if (userResp.authorities.filter(auth => auth === 'ROLE_ADMIN').length > 0 && gestion.privado === true) {
         docuFiltered.push(gestion);
       }
     });
@@ -70,5 +75,5 @@ export class GestionService {
     }
     return user;
   }
-  
+
 }
