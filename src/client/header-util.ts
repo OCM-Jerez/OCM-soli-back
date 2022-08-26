@@ -2,8 +2,6 @@ import { config } from '../config';
 import { Response } from 'express';
 import { Page } from '../domain/base/pagination.entity';
 
-import { URL } from 'url';
-
 const applicationName = config.get('jhipster.clientApp.name');
 const enableTranslation = true;
 
