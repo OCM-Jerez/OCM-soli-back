@@ -33,7 +33,6 @@ export class DocumentoService {
     return await this.documentoRepository.findAndCount(options);
   }
 
-
   async findAllMAM(): Promise<Documento[]> {
     const options = { relations: relationshipNames };
     return await this.documentoRepository.find(options);
