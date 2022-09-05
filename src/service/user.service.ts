@@ -5,6 +5,7 @@ import { FindManyOptions, FindOneOptions } from 'typeorm';
 import { User } from '../domain/user.entity';
 import { UserRepository } from '../repository/user.repository';
 
+
 @Injectable()
 export class UserService {
   constructor(@InjectRepository(UserRepository) private userRepository: UserRepository) { }
@@ -49,6 +50,11 @@ export class UserService {
       resultList[0] = users;
     }
     return resultList;
+  }
+
+  async findAllMAM(): Promise<User[]> {
+    const options = {};
+    return await this.userRepository.find(options);
   }
 
   async save(user: User): Promise<User | undefined> {

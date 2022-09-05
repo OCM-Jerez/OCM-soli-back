@@ -15,9 +15,21 @@ import { UserService } from '../../service/user.service';
 @ApiUseTags('users')
 
 export class UserController {
- logger = new Logger('UserController');
+  logger = new Logger('UserController');
 
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
+  @Get('todas')
+  // @Roles(RoleType.USER)
+  @ApiOperation({ title: 'Get all solicitudes' })
+  @ApiResponse({
+    status: 200,
+    description: 'List all records',
+    type: User
+  })
+  async getAllMAM(): Promise<User[]> {
+    const results = await this.userService.findAllMAM();
+    return results;
+  }
 
   @Get('/')
   @Roles(RoleType.ADMIN)
@@ -49,15 +61,15 @@ export class UserController {
     type: User
   })
 
-  @ApiResponse({ 
-     status: 403,
-     description: 'Forbidden.'
-     })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden.'
+  })
 
-  @ApiResponse({ 
+  @ApiResponse({
     status: 401,
     description: 'Unauthorized.'
-    })
+  })
 
   async createUser(@Req() req: Request, @Body() user: User): Promise<User> {
     const created = await this.userService.save(user);
@@ -88,7 +100,7 @@ export class UserController {
   async getUser(@Param('login') loginValue: string): Promise<User> {
     return await this.userService.find({ where: { login: loginValue } });
   }
- 
+
   @Delete('/:login')
   @ApiOperation({ title: 'Delete login user' })
   @ApiResponse({
@@ -101,5 +113,5 @@ export class UserController {
     const userToDelete = await this.userService.find({ where: { login: loginValue } });
     return await this.userService.delete(userToDelete);
   }
-  
+
 }
